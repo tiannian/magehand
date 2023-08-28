@@ -16,7 +16,7 @@ impl GenerateBackend for BlockStatament {
                     i.generate(f, indent + 1)?;
                 }
 
-                writeln!(f, "{:width$}}}", "")?;
+                write!(f, "{:width$}}}", "")?;
             }
             BlockStatament::VarDecl(v) => v.generate(f, indent)?,
             BlockStatament::Assign(v) => v.generate(f, indent)?,
@@ -26,7 +26,7 @@ impl GenerateBackend for BlockStatament {
             BlockStatament::Loop(v) => v.generate(f, indent)?,
         }
 
-        Ok(())
+        writeln!(f)
     }
 }
 

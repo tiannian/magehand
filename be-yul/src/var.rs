@@ -11,8 +11,7 @@ impl GenerateBackend for VarDecl {
         write!(f, "{:width$}let ", "")?;
         self.name.generate(f, indent)?;
         write!(f, " := ")?;
-        self.expr.generate(f, indent)?;
-        writeln!(f)
+        self.expr.generate(f, indent)
     }
 }
 
@@ -23,8 +22,7 @@ impl GenerateBackend for Assign {
         write!(f, "{:width$}", "")?;
         self.name.generate(f, indent)?;
         write!(f, " := ")?;
-        self.expr.generate(f, indent)?;
-        writeln!(f)
+        self.expr.generate(f, indent)
     }
 }
 
@@ -66,7 +64,7 @@ pub mod var_tests {
         let v = build_var_decl();
         v.generate(&mut s, 0).unwrap();
 
-        assert_eq!("let test0 := _test(arg1, 0x0123456789abcdef)\n", s);
+        assert_eq!("let test0 := _test(arg1, 0x0123456789abcdef)", s);
     }
 
     #[test]
@@ -76,6 +74,6 @@ pub mod var_tests {
         let a = build_assign();
         a.generate(&mut s, 0).unwrap();
 
-        assert_eq!("test0 := _test(arg1, 0x0123456789abcdef)\n", s);
+        assert_eq!("test0 := _test(arg1, 0x0123456789abcdef)", s);
     }
 }

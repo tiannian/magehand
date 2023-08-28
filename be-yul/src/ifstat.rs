@@ -13,7 +13,7 @@ impl GenerateBackend for If {
             i.generate(f, indent + 1)?;
         }
 
-        writeln!(f, "{:width$}}}", "")?;
+        write!(f, "{:width$}}}", "")?;
 
         Ok(())
     }
