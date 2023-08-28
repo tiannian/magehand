@@ -2,7 +2,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::{Ident, Literal};
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Func {
     pub name: Ident,
     pub args: Vec<Ident>,
@@ -10,7 +10,7 @@ pub struct Func {
     pub block: Vec<BlockStatament>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum BlockStatament {
     Block(Vec<BlockStatament>),
     VarDecl(VarDecl),
@@ -21,32 +21,32 @@ pub enum BlockStatament {
     Switch(Switch),
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct VarDecl {
     pub name: Ident,
     pub expr: Expr,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Assign {
     pub name: Ident,
     pub expr: Expr,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub enum Expr {
     Literal(Literal),
     Varable(Ident),
     FunctionCall(Ident, Vec<Expr>),
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct If {
     pub cond: Expr,
     pub block: Vec<BlockStatament>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Loop {
     pub decl: VarDecl,
     pub cond: Expr,
@@ -54,7 +54,7 @@ pub struct Loop {
     pub block: Vec<BlockStatament>,
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Switch {
     pub cond: Expr,
     pub cases: Vec<(Literal, Vec<BlockStatament>)>,
