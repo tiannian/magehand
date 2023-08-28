@@ -23,7 +23,7 @@ impl GenerateBackend for BlockStatament {
             BlockStatament::Expr(v) => v.generate(f, indent)?,
             BlockStatament::If(v) => v.generate(f, indent)?,
             BlockStatament::Switch(v) => v.generate(f, indent)?,
-            _ => panic!("Unsupport"),
+            BlockStatament::Loop(v) => v.generate(f, indent)?,
         }
 
         Ok(())
@@ -32,7 +32,7 @@ impl GenerateBackend for BlockStatament {
 
 #[cfg(test)]
 mod block_tests {
-    use magehand_core::{BlockStatament, Expr, Ident, If, Literal, Switch};
+    use magehand_core::{BlockStatament, Expr, Ident, If, Literal, Loop, Switch};
 
     use crate::{var_tests, GenerateBackend};
 
@@ -109,5 +109,28 @@ mod block_tests {
         sw.generate(&mut s, 0).unwrap();
 
         assert_eq!("switch arg1\ncase \"hello\" {\n  let test0 := _test(arg1, 0x0123456789abcdef)\n}\ncase \"hello\" {\n  let test0 := _test(arg1, 0x0123456789abcdef)\n}\ndefault  {\n  let test0 := _test(arg1, 0x0123456789abcdef)\n  let test0 := _test(arg1, 0x0123456789abcdef)\n}\n", s);
+    }
+
+    #[test]
+    fn test_loop() {
+        let mut s = String::new();
+        let vd = BlockStatament::VarDecl(var_tests::build_var_decl());
+        let ass = var_tests::build_assign();
+        let default = vec![vd.clone(), vd.clone()];
+
+        let cond = Expr::Varable(Ident::new("arg1").unwrap());
+
+        let lp = BlockStatament::Loop(Loop {
+            decl: Some(var_tests::build_var_decl()),
+            cond,
+            step: Some(ass),
+            block: default,
+        });
+
+        lp.generate(&mut s, 0).unwrap();
+
+        println!("{}", s);
+
+        /* assert_eq!("switch arg1\ncase \"hello\" {\n  let test0 := _test(arg1, 0x0123456789abcdef)\n}\ncase \"hello\" {\n  let test0 := _test(arg1, 0x0123456789abcdef)\n}\ndefault  {\n  let test0 := _test(arg1, 0x0123456789abcdef)\n  let test0 := _test(arg1, 0x0123456789abcdef)\n}\n", s); */
     }
 }

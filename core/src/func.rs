@@ -48,9 +48,9 @@ pub struct If {
 
 #[derive(Debug, Serialize, Deserialize, Clone)]
 pub struct Loop {
-    pub decl: VarDecl,
+    pub decl: Option<VarDecl>,
     pub cond: Expr,
-    pub step: Assign,
+    pub step: Option<Assign>,
     pub block: Vec<BlockStatament>,
 }
 
