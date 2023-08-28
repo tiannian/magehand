@@ -36,6 +36,7 @@ pub struct Assign {
 #[derive(Debug, Serialize, Deserialize)]
 pub enum Expr {
     Literal(Literal),
+    Varable(Ident),
     FunctionCall(Ident, Vec<Expr>),
 }
 

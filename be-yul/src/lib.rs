@@ -4,8 +4,8 @@ pub use prelude::*;
 mod types;
 pub use types::*;
 
-/* mod expr;
+mod expr;
 pub use expr::*;
- */
+
 mod var;
 pub use var::*;
